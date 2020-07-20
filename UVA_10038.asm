@@ -5,7 +5,8 @@
 .DATA 
      A DW 5000 DUP (0)  
      K DW ? 
-     B DW 5000 DUP (0)            
+     B DW 5000 DUP (0)
+            
      SINDEX DW ?
      TEMP DW ?  
      TEMP_A DW ? 
@@ -31,16 +32,20 @@
      SUM DB 'SUM : $'  
      JOLLY DB 'Jolly $' 
      NOT_JOLLY DB 'Not Jolly $'
+
 .CODE
 MAIN PROC 
      MOV AX,@DATA
-     MOV DS,AX      
-     TOP:   ; while( cin >> n )                     
+     MOV DS,AX 
+     
+     TOP:   ; while( cin >> n )
+                     
      LEA DX,INPUT
      MOV AH,9
      INT 21H 
      CALL NEWLINE
-         
+     
+     
      CALL DECIMEL_INPUT     ;INPUT N
      MOV N,AX
      MOV N1,AX
@@ -377,25 +382,30 @@ NEWLINE PROC
         
 NEWLINE ENDP  
 
- SORTING PROC     
+SORTING PROC 
+    
      PUSH K
      PUSH AX
      PUSH BX
      PUSH CX
-     PUSH DX     
+     PUSH DX
+     
   ;SORTING START 
      XOR BX,BX  ;ARRAY INDEX IN BX       
-     MOV CX,K   ;LOOP COUNTER     
+     MOV CX,K   ;LOOP COUNTER
+     
      OUTER_LOOP: 
               MOV SINDEX,BX 
               MOV I,BX      ;OUTER LOOP CURRENT INDEX = I
               MOV N,CX      ;OUTER LOOP COUNTER ,N=CX
-                            
+              
+              
               ADD BX,2      ;THE NEXT INDEX OF CURRENT INDEX I, THAT IS J=I+1
               MOV J,BX
               SUB CX,1      ;INNER LOOP EKBAR KOM COLBE
               CMP CX,0      ;INNER LOOP JOKHON R CHECK KORTE HOBE NAA TOKHON OUTPUT PRINT KORTE COLE JABE
-              JE L4 
+              JE L4
+ 
               INNER_LOOP:
                        MOV AX,A[BX]  ;AX=A[J] & BX=J  
                        MOV TEMP,BX   ;BX K TEMP E DHORE RAKHLAM
@@ -410,7 +420,8 @@ NEWLINE ENDP
                        L2:
                        ADD BX,2
               LOOP INNER_LOOP 
-                              
+                  
+                  
             ;INTERCHANGE A[I] & A[SINDEX]      
               L1:
                 MOV BX,I 
@@ -429,22 +440,31 @@ NEWLINE ENDP
                 MOV DX,TEMP_A  
                 MOV A[BX],DX  
              ;FINISH INTERCHANGE LABEL
-                             
+                
+                
+                
                 MOV BX,I 
                 MOV CX,N
-                ADD BX,2          
+                ADD BX,2
+              
+           
      LOOP OUTER_LOOP
-  ;SORTING END   
+  ;SORTING END  
+  
      L4:
      POP DX
      POP CX
      POP BX
      POP AX 
-     POP K     
-     RET   
+     POP K
+     
+     RET
+    
      LESS_THAN:
-          MOV AX,TEMP
-          MOV SINDEX,AX 
-          JMP L2 
-SORTING ENDP       
+              MOV AX,TEMP
+              MOV SINDEX,AX 
+              JMP L2 
+  
+SORTING ENDP   
+    
 END MAIN
